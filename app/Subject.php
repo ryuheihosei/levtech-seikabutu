@@ -11,5 +11,10 @@ class Subject extends Model
     {
         return $this->hasMany('App\Post');  
     }
+    
+    public function getBySubject(int $limit_count = 5)
+    {
+         return $this->posts()->with('subject')->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
    
 }

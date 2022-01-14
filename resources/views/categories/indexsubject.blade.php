@@ -13,29 +13,27 @@
         @if(Auth::user())
           <a href="/user">{{Auth::user()->name}}さんの投稿</a>
         @endif
-        
         <h1>Blog Name</h1>
         
         <div class="category">
             <h2>条件絞り込み</h2>
-            <form action="/posts/search" method="POST">
-                @csrf
-            　　<select name="grade_id">
+            <form action="/posts/" method="POST">
+                <select name="grade_id">
                     @foreach($grades as $grade)
                         <option value="{{ $grade->id }}">{{ $grade->name }}</option>
                     @endforeach
                 </select>
                 
                 <select name="subject_id">
-                @foreach($subjects as $subject)
-                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
-                @endforeach
+                    @foreach($subjects as $subject)
+                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                    @endforeach
                 </select>
-                <input type="submit" value="検索"/>
+                <input type="submit" value="絞り込み"/>
             </form>
         </div>
         
-        [<a href='/posts/create'>create</a>]
+        [<a href='/posts/create'>create</a>]  [<a href="/">ホームに戻る</a>]
         <div class='posts'>
             @foreach ($posts as $post)
                 <div><small>{{ $post->user->name }}</small></div>

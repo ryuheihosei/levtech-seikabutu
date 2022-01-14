@@ -11,7 +11,7 @@
     </head>
     <body>
         @if(Auth::user())
-          <a href="/user">{{Auth::user()->name}}さんの投稿</a>
+          {{Auth::user()->name}}さんの投稿一覧
         @endif
         
         <h1>Blog Name</h1>
@@ -38,7 +38,6 @@
         [<a href='/posts/create'>create</a>]
         <div class='posts'>
             @foreach ($posts as $post)
-                <div><small>{{ $post->user->name }}</small></div>
                 <div class='post'>
                     <h2 class='title'>
                         <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
