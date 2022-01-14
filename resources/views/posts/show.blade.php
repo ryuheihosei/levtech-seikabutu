@@ -1,4 +1,6 @@
-<!DOCTYPE HTML>
+@extends('layouts.app')
+
+@section('content')<!DOCTYPE HTML>
 <html lang="{{ str_replace("_", "-", app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -19,7 +21,8 @@
             <p class='delete'>[<span onclick="return deletePost(this);">delete</span>]</p>
         </form>
         
-        <a href="">{{ $post->subject->name }}</a>       <a href=""> {{$post->grade->name}}</a>
+        <div><small>{{ $post->user->name }}</small></div>
+        <a href="/subjects/{{ $post->subject->id }}">{{ $post->subject->name }}</a>       <a href="/grades/{{ $post->grade->id }}"> {{$post->grade->name}}</a>
         <div class="content">
             <h2 class="title">{{ $post->title }}</h2>
             
@@ -29,8 +32,35 @@
             </div>
         </div>
         <div class="footer">
-            <a href="/">戻る</a>
+            <a href="/">ホームに戻る</a>
         </div>
+        
+        <form action="/posts/{{$post->id}}/comments" method="POST" >
+            @csrf
+            
+            <input name="comment[post_id]" type="hidden" value="{{ $post->id }}" >
+            <div class="commentbody">
+                <h2>コメント投稿</h2>
+                <textarea name="comment[body]" placeholder="ここにコメントしてね"></textarea>
+            </div>
+            
+            <input type="submit" value="コメント"/>
+        
+        </form>
+        
+        @forelse($post->comments as $comment)
+            <div class="border-top p-4">
+                <time class="text-secondary">
+                    {{ $comment->created_at->format('Y.m.d H:i') }}
+                </time>
+                <p class="mt-2">
+                    {!! nl2br(e($comment->body)) !!}
+                </p>
+            </div>
+        @empty
+            <p>コメントはまだありません。</p>
+        @endforelse
+        
         <script>
             function deletePost(e){
                 'use strict';
@@ -41,3 +71,4 @@
         </script>
     </body>
 </html>
+@endsection

@@ -10,11 +10,13 @@ use App\Subject;
 
 use App\Grade;
 
+use App\User;
+
 class PostController extends Controller
 {
-    public function index(Post $post)
+    public function index(Post $post,Grade $grade, Subject $subject)
     {
-        return view('posts/index')->with(['posts' => $post->getPaginateByLimit()]);
+        return view('posts/index')->with(['posts' => $post->getPaginateByLimit()])->with(['grades' => $grade->get()])->with(['subjects' => $subject->get()]);
     }
     
     public function show(Post $post)
@@ -30,6 +32,7 @@ class PostController extends Controller
     public function store(PostRequest $request, Post $post)
     {
         $input = $request['post'];
+        $input += ['user_id' => $request->user()->id];
         $post->fill($input)->save();
         return redirect('/posts/' . $post->id);
     }
@@ -42,6 +45,7 @@ class PostController extends Controller
     public function update(PostRequest $request, Post $post)
     {
         $input_post = $request['post'];
+        $input += ['user_id' => $request->user()->id];
         $post->fill($input_post)->save();
     
         return redirect('/posts/' . $post->id);
@@ -51,6 +55,24 @@ class PostController extends Controller
     {
         $post->delete();
         return redirect('/');
+    }
+    
+    public function search(PostRequest $request, Post $post,Subject $subject,Grade $grade)
+    {
+        
+        $grade_id = $request->input('grade_id');
+        $subject_id = $request->input('subject_id');
+        
+        $query = \App\Post::where('grade_id',$grade_id)->get();;
+        
+        
+        /*
+        $res = \App\モデル名::whereHas('Grade', function($q) use ($grade_id){
+            $q->where('', 値);
+        })->get();
+        */
+        return view('posts/index')->with(['posts' => $query->getPaginateByLimit()])->with(['grades' => $grade->get()])->with(['subjects' => $subject->get()]);
+
     }
     
     
