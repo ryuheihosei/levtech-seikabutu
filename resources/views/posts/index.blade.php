@@ -17,7 +17,7 @@
         <h1>Blog Name</h1>
         
         <div class="category">
-            <h2>条件絞り込み</h2>
+            <h2>条件</h2>
             <form action="/posts/search" method="POST">
                 @csrf
             　　<select name="grade_id">

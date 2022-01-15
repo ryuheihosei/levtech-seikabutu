@@ -16,6 +16,7 @@ Route::get('/', 'PostController@index');
 
 Route::post('/posts/search', 'PostController@search');
 
+
 Route::group(['middleware' => 'auth'], function(){
     
 

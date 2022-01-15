@@ -12,16 +12,18 @@
     </head>
     <body>
         <h1>Blog Name</h1>
-        <p class="edit">[<a href="/posts/{{ $post->id }}/edit">edit</a>]</p>
         
-        <form action="/posts/{{$post->id}}" id="form_delete" method="post">
-            @csrf
-            @method('DELETE')
-            <input type="submit" style="display:none">
-            <p class='delete'>[<span onclick="return deletePost(this);">delete</span>]</p>
-        </form>
-        
-        <div><small>{{ $post->user->name }}</small></div>
+        @if(($post->user->id) ==(Auth::user()->id))
+            <p class="edit">[<a href="/posts/{{ $post->id }}/edit">edit</a>]</p>
+            
+            <form action="/posts/{{$post->id}}" id="form_delete" method="post">
+                @csrf
+                @method('DELETE')
+                <input type="submit" style="display:none">
+                <p class='delete'>[<span onclick="return deletePost(this);">delete</span>]</p>
+            </form>
+        @endif
+        <div><small>質問者：{{ $post->user->name }}</small></div>
         <a href="/subjects/{{ $post->subject->id }}">{{ $post->subject->name }}</a>       <a href="/grades/{{ $post->grade->id }}"> {{$post->grade->name}}</a>
         <div class="content">
             <h2 class="title">{{ $post->title }}</h2>

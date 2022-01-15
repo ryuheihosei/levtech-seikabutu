@@ -62,16 +62,16 @@ class PostController extends Controller
         
         $grade_id = $request->input('grade_id');
         $subject_id = $request->input('subject_id');
+        ddd($grade_id);
+        $query = \App\Post::where('grade_id',$grade_id)->get();
         
-        $query = \App\Post::where('grade_id',$grade_id)->get();;
         
         
-        /*
         $res = \App\モデル名::whereHas('Grade', function($q) use ($grade_id){
             $q->where('', 値);
         })->get();
-        */
-        return view('posts/index')->with(['posts' => $query->getPaginateByLimit()])->with(['grades' => $grade->get()])->with(['subjects' => $subject->get()]);
+        
+        return view('posts/index')->with(['posts' => $query->getPaginateByLimit()],['grades' => $grade->get()],['subjects' => $subject->get()]);
 
     }
     
