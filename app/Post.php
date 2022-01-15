@@ -24,14 +24,16 @@ class Post extends Model
         return $this::with('subject','grade','user')->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
     
-    public function subject()
-    {
-        return $this->belongsTo('App\Subject');
-    }
+    
     
     public function grade()
     {
         return $this->belongsTo('App\Grade');
+    }
+    
+    public function subject()
+    {
+        return $this->belongsTo('App\Subject');
     }
     
     

@@ -14,10 +14,10 @@
 
 Route::get('/', 'PostController@index');
 
-Route::post('/posts/search', 'PostController@search');
+Route::get('/posts/search', 'PostController@search');
 
 
-Route::group(['middleware' => 'auth'], function(){
+//Route::group(['middleware' => 'auth'], function(){
     
 
     Route::get('/posts/create', 'PostController@create');
@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/user', 'UserController@index');
     
 
-});
+//});
 
 Route::get('/posts/{post}', 'PostController@show');
 

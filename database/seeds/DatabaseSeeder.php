@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(GradeTableSeeder::class);
         $this->call(SubjectTableSeeder::class);
-        $this->call(PostsTableSeeder::class);
         
     }
     

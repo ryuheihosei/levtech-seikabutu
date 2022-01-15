@@ -1,15 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <title>Blog</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    </head>
-    <body>
         @if(Auth::user())
           <a href="/user">{{Auth::user()->name}}さんの投稿</a>
         @endif
@@ -18,11 +9,8 @@
         
         <div class="category">
             <h2>条件</h2>
-            
-            <form action="/posts/search" method="post">
+            <form action="/posts/search" method="POST">
                 @csrf
-                {{method_field('get')}}
-                
             　　<select name="grade_id">
                     @foreach($grades as $grade)
                         <option value="{{ $grade->id }}">{{ $grade->name }}</option>
@@ -60,6 +48,4 @@
         <div class='paginate'>
             {{ $posts->links() }}
         </div>
-    </body>
-</html>
 @endsection
